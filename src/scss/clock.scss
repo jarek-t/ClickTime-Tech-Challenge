@@ -1,0 +1,33 @@
+$clock-side-length: 15rem;
+$clock-border: 7.5rem;
+
+#clock-display {
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    
+    #clock-body {
+        width: $clock-side-length;
+        height: $clock-side-length;
+
+        border-radius: $clock-border;
+        background-color: $orange;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+
+        transform: translateY(-50%);
+
+        #current-time {
+            color: $darkest-blue;
+            font-size: 1rem;
+            text-align: center;
+        }
+    }
+}

@@ -1,3 +1,11 @@
 @import './assets.scss';
+@import './clock.scss';
+@import './body.scss';
+@import './background.scss';
 
-h1 { color: $blue; }
+// h1 { color: $blue; }
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
