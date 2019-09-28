@@ -32,12 +32,11 @@
 
 
         #current-time {
+            @extend .no-select;
+
             color: #FFF;
             font-size: 2.75rem;
             text-align: center;
-
-            -webkit-user-select: none;
-            -moz-user-select: none;
         }
 
         z-index: 2;

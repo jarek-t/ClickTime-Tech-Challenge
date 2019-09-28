@@ -13,4 +13,9 @@ $clock-border: 7.5rem;
 
 .pink-border { border: .25rem solid $blue; }
 
+.no-select { 
+    -webkit-user-select: none;
+    -moz-user-select: none;
+}
+
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');

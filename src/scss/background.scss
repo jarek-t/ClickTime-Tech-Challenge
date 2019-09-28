@@ -1,7 +1,10 @@
 @keyframes cloud-ambient-1 {
     0% { transform: sccale(100%); }
 
-    50% { transform: scale(125%); transform: translate(.775, .775); }
+    50% {
+        transform: scale(125%); 
+        transform: translate(.775, .775); 
+    }
 
     0% { transform: sccale(100%); }
 }
@@ -9,7 +12,10 @@
 @keyframes cloud-ambient-2 {
     0% { transform: sccale(100%); }
 
-    50% { transform: scale(85%); transform: translate(1.125, 1.125); }
+    50% {
+        transform: scale(85%); 
+        transform: translate(1.125, 1.125); 
+    }
 
     0% { transform: sccale(100%); }
 }
@@ -29,8 +35,8 @@
 
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-content: flex-start;
+    justify-content: space-between;
 
     .background-cloud-cluster {
         width: 12.5rem;
