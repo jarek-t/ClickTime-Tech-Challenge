@@ -1,10 +1,27 @@
 #background-wrap {
+    position: absolute;
     z-index: -1;
-    background-color: $darkest-blue;
+    left: 0;
+    top: 0;
+    
     width: 100%;
     height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: visible;
+    
+    padding: 2rem 10%;
+    box-sizing: border-box;
+    // background-color: $darkest-blue;
+    background: linear-gradient(180deg, rgba(8,41,67,1) 31%, rgba(32,149,242,1) 100%);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: flex-start;
+
+    .background-cloud-cluster {
+        width: 12.5rem;
+        height: 12.5rem;
+    }
+
+    #left-most-clouds, #right-clouds
+        { margin-top: 1.5rem; }
 }

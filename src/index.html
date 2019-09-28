@@ -16,9 +16,9 @@
       <section id="clock-display">
         <div id="clock-body">
           <h1 id="current-time">
-            <span id="hours">00</span> :
-            <span id="minutes">00</span> :
-            <span id="seconds">00</span>
+            <span id="hours">00</span>:<span 
+                id="minutes">00</span>:<span 
+                id="seconds">00</span>
           </h1>
         </div>
       </section>
@@ -29,8 +29,12 @@
     </div>
 
     <div id="background-wrap">
-  
+      <img src="assets/clouds.svg" alt="background cloud cluster" class="background-cloud-cluster" id="left-most-clouds">
+      <img src="assets/clouds.svg" alt="background cloud cluster" class="background-cloud-cluster" id="left-clouds">
+      <img src="assets/clouds.svg" alt="background cloud cluster" class="background-cloud-cluster" id="right-clouds">
+      <img src="assets/clouds.svg" alt="background cloud cluster" class="background-cloud-cluster" id="right-most-clouds">
     </div>
+    <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"  title="Flaticon">www.flaticon.com</a></div> -->
   </body>
 
   <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">

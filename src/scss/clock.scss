@@ -1,9 +1,8 @@
-$clock-side-length: 15rem;
-$clock-border: 7.5rem;
+
 
 #clock-display {
     width: 100%;
-    height: auto;
+    height: 5rem;
     box-sizing: border-box;
 
     display: flex;
@@ -11,23 +10,29 @@ $clock-border: 7.5rem;
     justify-content: center;
     
     #clock-body {
+        cursor: pointer;
+        transform: translateY(-70%);
+
         width: $clock-side-length;
         height: $clock-side-length;
 
-        border-radius: $clock-border;
+        @extend .pink-border;
         background-color: $orange;
+        border-radius: $clock-border;
 
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-content: center;
+        justify-content: center;
 
-        transform: translateY(-50%);
 
         #current-time {
-            color: $darkest-blue;
-            font-size: 1rem;
+            color: #FFF;
+            font-size: 2.75rem;
             text-align: center;
+
+            -webkit-user-select: none;
+            -moz-user-select: none;
         }
     }
 }
