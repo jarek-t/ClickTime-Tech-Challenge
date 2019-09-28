@@ -8,6 +8,9 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    // align-content: flex-end;
+    flex-wrap: wrap;
+    
     
     #clock-body {
         cursor: pointer;
@@ -19,6 +22,8 @@
         @extend .pink-border;
         background-color: $orange;
         border-radius: $clock-border;
+
+        border-width: 1rem;
 
         display: flex;
         flex-direction: column;
@@ -34,5 +39,42 @@
             -webkit-user-select: none;
             -moz-user-select: none;
         }
+
+        z-index: 2;
+    }
+
+}
+#clock-control {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    
+    #control-wrap {
+        z-index: 1;
+        background-color: $blue;
+        
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        
+        margin: auto;
+        padding: .5rem 1rem 1rem 1rem;
+        border-radius: 0 0 1.25rem 1.25rem;
+        width: calc(#{$clock-side-length}*2.25);
+
+        i {
+            cursor: pointer;
+            color: $orange;
+            font-size: 3.5rem;
+        }
     }
 }
+

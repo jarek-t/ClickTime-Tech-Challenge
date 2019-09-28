@@ -1,3 +1,19 @@
+@keyframes cloud-ambient-1 {
+    0% { transform: sccale(100%); }
+
+    50% { transform: scale(125%); transform: translate(.775, .775); }
+
+    0% { transform: sccale(100%); }
+}
+
+@keyframes cloud-ambient-2 {
+    0% { transform: sccale(100%); }
+
+    50% { transform: scale(85%); transform: translate(1.125, 1.125); }
+
+    0% { transform: sccale(100%); }
+}
+
 #background-wrap {
     position: absolute;
     z-index: -1;
@@ -9,7 +25,6 @@
     
     padding: 2rem 10%;
     box-sizing: border-box;
-    // background-color: $darkest-blue;
     background: linear-gradient(180deg, rgba(8,41,67,1) 31%, rgba(32,149,242,1) 100%);
 
     display: flex;
@@ -20,8 +35,21 @@
     .background-cloud-cluster {
         width: 12.5rem;
         height: 12.5rem;
+        animation-duration: 1s;
     }
 
-    #left-most-clouds, #right-clouds
-        { margin-top: 1.5rem; }
+    #left-most-clouds,
+    #right-clouds { 
+        margin-top: 1.5rem;
+
+        animation-name: cloud-ambient-1;
+        animation-duration: 1s;
+    }
+
+    #left-clouds,
+    #right-most-clouds 
+        { animation-name: cloud-ambient-2; }
+
+
 }
+
