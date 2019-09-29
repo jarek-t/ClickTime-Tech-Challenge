@@ -46,11 +46,13 @@
 
     #history-header {
         width: 100%;
+        box-sizing: border-box;
+        padding: 0 calc(10%+1rem);
 
         display: flex;
         flex-direction: row;
         align-content: flex-start;
-        justify-content: space-around;
+        justify-content: space-between;
 
         h3 {
             @extend .no-select;
@@ -62,13 +64,16 @@
     }
 
     #history-table {
-        border-top: .25rem solid $blue;
         box-sizing: border-box;
-        margin: 1rem 10%;
-        // margin: 1rem 0 0 0;
-        list-style: none;
-        padding: 1rem;
+        margin: 1rem 10% 0;
+        padding: 1rem 1rem 0 1rem;
         flex: 1;
+
+        border: .25rem solid $blue;
+        border-radius: 2.5rem 2.5rem 0 0;
+        border-bottom: none;
+        list-style: none;
+        background-color: #FFF;
 
         li {
             width: 100%;
@@ -79,8 +84,8 @@
 
             * {
                 padding: 0;
-                margin: 0;
-                height: auto;
+                margin: auto;
+                height: auto;        
             }
         }
     }

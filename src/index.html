@@ -15,20 +15,36 @@
     <div id="main-content-wrap">
       <section id="clock-display">
         <div id="clock-body">
-          <h1 id="current-time">
-            <span id="hours">00</span>:<span 
-                id="minutes">00</span>:<span 
-                id="seconds">00</span>
+          <label id="starting-label" for="starting-time">Starting</label>
+
+          <h1 class="starting" id="starting-time">
+              <span id="starting-hours">--</span>:<span 
+                  id="starting-minutes">--</span>:<span 
+                  id="starting-seconds">--</span>
           </h1>
 
-        </div>        
+          <h1 id="current-time">
+            <span id="current-hours">00</span>:<span 
+                id="current-minutes">00</span>:<span 
+                id="current-seconds">00</span>
+          </h1>
+          
+          <label id="elapsed-label" for="elapsed-time">Elapsed</label>
+
+          <h1 class="elapsed" id="elapsed-time">
+              <span id="elapsed-hours">--</span>:<span 
+                  id="elapsed-minutes">--</span>:<span 
+                  id="elapsed-seconds">--</span>
+          </h1>
+
+        </div>    
       </section>
 
       <aside id="clock-control">
         <div id="control-wrap">
-          <i class="fas fa-stop"></i>
+          <i id="stop-timer" class="fas fa-stop"></i>
 
-          <i class="fas fa-play"></i>
+          <i id="start-timer" class="fas fa-play"></i>
         </div>
       </aside>
 
@@ -37,13 +53,21 @@
           <h3>History</h3>
 
           <button id="history-reset-button">
-            <i class="fab fa-creative-commons-sa"></i>
+            <i class="fas fa-ban"></i>
             <p>
               Clear History
             </p>
           </button>
         </div>
+
         <ul id="history-table">
+          <header id="history-headers">
+            <h3>Elapsed Time</h3>
+            <h3>Starting Time</h3>
+            <h3>Ending Time</h3>
+            <h3>Coordinates</h3>
+          </header>
+
           <li>
             <h1>test entry</h1>
             <p>test data</p>

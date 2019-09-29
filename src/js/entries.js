@@ -1,12 +1,16 @@
+
+const entryVaidator = require('./helpers/entry-validators')
+
 class Entries {
-    constructor() {
+    constructor(coordinator) {
         if (!localStorage.entries) localStorage.entries = {}
 
-        self.fieldValidation = {
-            "lat": null,//re expression
-            "lng": null,//re expression
-            "timezone": null,//re expression
-            "timestamp": null//re expression
+        this.coordinator = coordinator
+
+        this.fieldValidation = {
+            "lat": entryVaidator.lat,
+            "lng": entryVaidator.lng,
+            "dateInfo": entryVaidator.date
         }
     }
 
@@ -23,12 +27,12 @@ class Entries {
             let newEntry = {}
             let allValid = true
     
-            let allFields = Object.keys(self.fieldValidation)
+            let allFields = Object.keys(this.fieldValidation)
     
             allFields.forEach(field => {
                 if ( source[field]
                      && 
-                    self.fieldValidation[field](source[field]) ) 
+                    this.fieldValidation[field](source[field]) ) 
                 
                 { newEntry[field] = source[field] }
     
@@ -36,15 +40,11 @@ class Entries {
             })
     
             if (allValid)
-                self.all.push(newEntry)
+                this.all.push(newEntry)
         }
 
         return allValid
-    }
-
-    validateField(source) {
-        // Validate with regex
-    }    
+    }  
 }
 
-module.exports = entries
+module.exports = Entries

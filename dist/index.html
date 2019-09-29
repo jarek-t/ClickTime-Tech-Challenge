@@ -15,20 +15,36 @@
     <div id="main-content-wrap">
       <section id="clock-display">
         <div id="clock-body">
-          <h1 id="current-time">
-            <span id="hours">00</span>:<span 
-                id="minutes">00</span>:<span 
-                id="seconds">00</span>
+          <label id="starting-label" for="starting-time">Starting</label>
+
+          <h1 class="starting" id="starting-time">
+              <span id="starting-hours">--</span>:<span 
+                  id="starting-minutes">--</span>:<span 
+                  id="starting-seconds">--</span>
           </h1>
 
-        </div>        
+          <h1 id="current-time">
+            <span id="current-hours">00</span>:<span 
+                id="current-minutes">00</span>:<span 
+                id="current-seconds">00</span>
+          </h1>
+          
+          <label id="elapsed-label" for="elapsed-time">Elapsed</label>
+
+          <h1 class="elapsed" id="elapsed-time">
+              <span id="elapsed-hours">--</span>:<span 
+                  id="elapsed-minutes">--</span>:<span 
+                  id="elapsed-seconds">--</span>
+          </h1>
+
+        </div>    
       </section>
 
       <aside id="clock-control">
         <div id="control-wrap">
-          <i class="fas fa-stop"></i>
+          <i id="stop-timer" class="fas fa-stop"></i>
 
-          <i class="fas fa-play"></i>
+          <i id="start-timer" class="fas fa-play"></i>
         </div>
       </aside>
 
@@ -37,7 +53,7 @@
           <h3>History</h3>
 
           <button id="history-reset-button">
-            <i class="fab fa-creative-commons-sa"></i>
+            <i class="fas fa-ban"></i>
             <p>
               Clear History
             </p>
@@ -61,8 +77,8 @@
     <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"  title="Flaticon">www.flaticon.com</a></div> -->
   </body>
 
-  <link rel="stylesheet" href="main.6b6048a47a3b7731860d.css?e7632da3441d642f0779">
+  <link rel="stylesheet" href="main.cafef6d5a1b10460a0a2.css?23fd17afa48f7b571923">
   <script src="https://kit.fontawesome.com/a31625db37.js"></script>
-  <script src="main.382ed3f67826f3b26662.js?e7632da3441d642f0779"></script>
+  <script src="main.c619d28fffded8fa67a7.js?23fd17afa48f7b571923"></script>
   
 </html>

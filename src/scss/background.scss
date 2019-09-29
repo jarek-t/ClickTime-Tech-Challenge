@@ -1,23 +1,21 @@
-@keyframes cloud-ambient-1 {
-    0% { transform: sccale(100%); }
+@keyframes cloudambient1 {
+    0% { transform: scale(1); }
 
     50% {
-        transform: scale(125%); 
-        transform: translate(.775, .775); 
+        transform: scale(1.05); 
     }
 
-    0% { transform: sccale(100%); }
+    100% { transform: scale(1); }
 }
 
-@keyframes cloud-ambient-2 {
-    0% { transform: sccale(100%); }
+@keyframes cloudambient2 {
+    0% { transform: scale(1); }
 
     50% {
-        transform: scale(85%); 
-        transform: translate(1.125, 1.125); 
+        transform: scale(.95); 
     }
 
-    0% { transform: sccale(100%); }
+    100% { transform: scale(1); }
 }
 
 #background-wrap {
@@ -41,21 +39,19 @@
     .background-cloud-cluster {
         width: 12.5rem;
         height: 12.5rem;
-        animation-duration: 1s;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
     }
 
     #left-most-clouds,
     #right-clouds { 
         margin-top: 1.5rem;
-
-        animation-name: cloud-ambient-1;
-        animation-duration: 1s;
+        animation-name: cloudambient1;
     }
 
     #left-clouds,
     #right-most-clouds 
-        { animation-name: cloud-ambient-2; }
-
-
+        { animation-name: cloudambient2; }
 }
 
