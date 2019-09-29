@@ -3,4 +3,9 @@ require.context('./../../assets')
 
 const Coordinator = require('./coordinator')
 
-console.log("Hello world!")
+if (localStorage) {
+    console.log("We can continue")
+}
+else {
+    console.log("This isn't going to work out")
+}
