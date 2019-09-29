@@ -24,6 +24,9 @@ const date = userDate =>
 
 module.exports.date = date
 
-const time = time => { return (/[\d\d\:]{3}/g.exec(time))[0] == time }
+const time = time => { 
+    return time instanceof Object && 
+        time.hours && time.minutes && time.seconds
+}
 
 module.exports.time = time

@@ -12,16 +12,15 @@ class Coordinator {
         document.getElementById('start-timer').addEventListener('click',
             () => this.clock.start() )
 
-        document.getElementById('stop-timer').addEventListener('click', () => this.newEntry())
+        document.getElementById('stop-timer').addEventListener('click', () => {
+            let entrySource = this.clock.stop()
+            entryMaker.data(entrySource, this)
+        })
     }
 
-    newEntry() {
-        let entrySource = this.clock.stop()
-        entryMaker.data(entrySource, this.entries)
-        
-        // let dom = 
-
-        this.historyTable.appendChild(entryMaker.dom(entrySource))
+    newEntry(source) {
+        this.entries.newEntry(source)
+        this.historyTable.appendChild(entryMaker.dom(source))
     }
 
 

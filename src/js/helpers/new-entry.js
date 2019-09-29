@@ -1,23 +1,25 @@
-let data = (source, destination) => {
+let data = (source, coordinator) => {
     if (!source instanceof Object) return undefined
+
+    // let destination = coordinator.entries
 
     if (navigator.geolocation) {
         let success = loc => {
             source.userLat = loc.coords.latitude
             source.userLng = loc.coords.longitude
-    
-            console.log(source)
-            destination.newEntry(source)
+
+            coordinator.newEntry(source)
         }
     
         let fail = () => { 
             window.alert("Couldn't access your location to complete the entry") 
-            destination.newEntry(source)
+
+            coordinator.newEntry(source)
         }
         
         pos = navigator.geolocation.getCurrentPosition(success, fail)
     }
-    else destination.newEntry(source)
+    else coordinator.newEntry(source)
 
     return source
 }
@@ -26,16 +28,43 @@ module.exports.data = data
 
 let dateToText = date => {
     if (!date || !date instanceof Date) return undefined
-    let dateStr = ''
-    
-    dateStr += date.getMonth() + '/' + date.getDate() + '/' +
+
+    dateStr = [
+        date.getMonth(),
+        date.getDate(),
         date.getFullYear().toString().substr(-2)
+    ].join('/')
     
-    
-    dateStr += ' ' + date.getHours() + ':' + date.getMinutes() + 
-        ':' + date.getSeconds()
+    dateStr += ' - '
+
+    dateStr += [
+        date.getHours(),
+        date.getMinutes(),
+        date.getSeconds()
+    ].join(':')
 
     return dateStr
+}
+
+let coordsToDisplay = source => {
+    if (!source || !source instanceof Object) return undefined
+    
+    let coords = document.createElement('h1')
+    
+    if (Number.isFinite(source.lat) && Number.isFinite(source.lng)) {
+        let link = document.createElement('a')
+        
+        link.href = 'https://google.com/maps/place/'+source.lat+','+source.lng
+        link.target = '_blank'
+        
+        link.innerHTML = source.lat.toPrecision(3) + ', ' + source.lng.toPrecision(3)
+        coords.appendChild(link)
+    }
+    else {
+        coords.innerHTML = 'No Data'
+    }
+
+    return coords.innerHTML
 }
 
 let dom = source => {
@@ -46,7 +75,9 @@ let dom = source => {
     entry.class = 'time-entry'
 
     let temp = document.createElement('h5')
-    temp.innerHTML = dateToText(source.elapsed)
+    temp.innerHTML += source.elapsed.hours + ":" + 
+        source.elapsed.minutes + ":" + 
+        source.elapsed.seconds
     entry.appendChild(temp)
 
     temp = document.createElement('h5')
@@ -57,6 +88,9 @@ let dom = source => {
     temp.innerHTML = dateToText(source.ending)
     entry.appendChild(temp)
 
+    temp = document.createElement('h5')
+    temp.innerHTML = coordsToDisplay(source)
+    entry.appendChild(temp)
 
     return entry
 }

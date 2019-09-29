@@ -75,7 +75,7 @@ class Clock {
         return timeInfo
     }
 
-    get elaspedTime() {
+    get elapsedTime() {
         if (!this.startingTimeInfo) return this.nullTime
 
         let elapsed = (this.currentTimeInfo.getTime() - this.startingTimeInfo.getTime())/1000
@@ -91,10 +91,9 @@ class Clock {
         Object.keys(et).forEach(t => {
             elapsed = et[t].toString()
 
-            console.log(elapsed.length)
             et[t] = elapsed.length >= 2 ? elapsed : "0" + elapsed
         })
-
+        
         return et
     }
 
@@ -113,10 +112,9 @@ class Clock {
         let times = {
             'starting': this.startingTime,
             'current': this.currentTime,
-            'elapsed': this.elaspedTime
+            'elapsed': this.elapsedTime
         }
-        
-
+    
         Object.keys(times).forEach(t => {
             let targetTime = this.displaySlots[t]
 
@@ -142,7 +140,6 @@ class Clock {
                 'elapsed': this.elapsedTime
             }
             this.pastElapses.push(meta)
-
             this.startingTimeInfo = undefined
         }
 
