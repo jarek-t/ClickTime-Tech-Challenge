@@ -1,12 +1,14 @@
 class Clock {
     constructor() {
-        self.displaySlots = {
+        this.displaySlots = {
             'hours': document.getElementById('hours'),
             'minutes': document.getElementById('minutes'),
             'seconds': document.getElementById('seconds'),
         }
+        console.log(this.displaySlots)
         
-        setTimeout(() => self.updateDisplay(), 1000)
+        this.updateDisplay()
+        setTimeout(() => this.updateDisplay(), 1000)
     }
 
     get time() {
@@ -28,9 +30,11 @@ class Clock {
     }
 
     updateDisplay() {
-        let currentTime = self.time
+        let currentTime = this.time
 
-        Object.keys(self.displaySlots).forEach(
-            ds => self.displaySlots[ds].innerHtml = currentTime[ds] )
+        Object.keys(this.displaySlots).forEach(
+            ds => this.displaySlots[ds].innerHtml = currentTime[ds] )
     }
 }
+
+module.exports = Clock

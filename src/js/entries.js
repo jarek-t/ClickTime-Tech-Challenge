@@ -4,7 +4,7 @@ class Entries {
     constructor() {
         if (!localStorage.entries) localStorage.entries = {}
 
-        self.fieldValidation = {
+        this.fieldValidation = {
             "lat": entryVaidator.lat,
             "lng": entryVaidator.lng,
             "dateInfo": entryVaidator.date
@@ -24,12 +24,12 @@ class Entries {
             let newEntry = {}
             let allValid = true
     
-            let allFields = Object.keys(self.fieldValidation)
+            let allFields = Object.keys(this.fieldValidation)
     
             allFields.forEach(field => {
                 if ( source[field]
                      && 
-                    self.fieldValidation[field](source[field]) ) 
+                    this.fieldValidation[field](source[field]) ) 
                 
                 { newEntry[field] = source[field] }
     
@@ -37,11 +37,11 @@ class Entries {
             })
     
             if (allValid)
-                self.all.push(newEntry)
+                this.all.push(newEntry)
         }
 
         return allValid
     }  
 }
 
-module.exports = entries
+module.exports = Entries
