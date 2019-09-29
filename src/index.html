@@ -15,10 +15,12 @@
     <div id="main-content-wrap">
       <section id="clock-display">
         <div id="clock-body">
+          <label class="time-display starting" for="starting-time">Starting</label>
+
           <h1 id="starting-time">
-              <span id="starting-hours">00</span>:<span 
-                  id="starting-minutes">00</span>:<span 
-                  id="starting-seconds">00</span>
+              <span id="starting-hours">--</span>:<span 
+                  id="starting-minutes">--</span>:<span 
+                  id="starting-seconds">--</span>
           </h1>
 
           <h1 id="current-time">
@@ -26,11 +28,13 @@
                 id="current-minutes">00</span>:<span 
                 id="current-seconds">00</span>
           </h1>
+          
+          <label class="time-display elapsed" for="elapsed-time">Elapsed</label>
 
-          <h1 id="elapsed-time">
-              <span id="elapsed-hours">00</span>:<span 
-                  id="elapsed-minutes">00</span>:<span 
-                  id="elapsed-seconds">00</span>
+          <h1 class="elapsed-time-display" id="elapsed-time">
+              <span id="elapsed-hours">--</span>:<span 
+                  id="elapsed-minutes">--</span>:<span 
+                  id="elapsed-seconds">--</span>
           </h1>
 
         </div>    

@@ -1,7 +1,7 @@
 class Clock {
     constructor() {
         this.startingTimeInfo = false
-        
+
         this.currentTimeInfo = this.startingTime
 
         this.displaySlots = {
@@ -21,8 +21,6 @@ class Clock {
                 'seconds': document.getElementById('elapsed-seconds')
             },
         }
-
-        console.log(this.displaySlots)
         
         this.updateDisplay()
     }
