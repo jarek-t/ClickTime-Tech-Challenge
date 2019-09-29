@@ -1,6 +1,6 @@
 class Clock {
     constructor() {
-        this.startingTimeInfo = false
+        this.startingTimeInfo
 
         this.currentTimeInfo = this.startingTime
 
@@ -22,6 +22,14 @@ class Clock {
             },
         }
         
+        this.pastElapses = []
+
+        document.getElementById('stop-timer').addEventListener('click',
+            () => this.stop() )
+
+        document.getElementById('start-timer').addEventListener('click',
+            () => this.start() )
+
         this.updateDisplay()
     }
 
@@ -74,14 +82,21 @@ class Clock {
     get elaspedTime() {
         if (!this.startingTimeInfo) return this.nullTime
 
-        let et = {}
-
-        let ct = this.currentTime
-        let st = this.startingTime
+        let elapsed = (this.currentTimeInfo.getTime() - this.startingTimeInfo.getTime())/1000
         
-        Object.keys(ct).forEach(t => {
-            let elapsed = (Number.parseInt(ct[t]) - Number.parseInt(st[t])).toString()
-            et[t] = elapsed.length == 2 ? elapsed : "0" + elapsed
+        let hours = Number.parseInt(elapsed/3600)
+        let et = {
+            'hours': hours,
+            'minutes': Number.parseInt(Number.parseInt(
+                (elapsed - (hours * 3600)) / 60 )),
+            'seconds': Number.parseInt(elapsed % 60)
+        }
+        
+        Object.keys(et).forEach(t => {
+            elapsed = et[t].toString()
+
+            console.log(elapsed.length)
+            et[t] = elapsed.length >= 2 ? elapsed : "0" + elapsed
         })
 
         return et
@@ -114,6 +129,28 @@ class Clock {
         })        
 
         setTimeout(() => this.updateDisplay(), 1000)
+    }
+
+    start() {
+        if (!this.startingTimeInfo)
+            this.startingTimeInfo = new Date() 
+    }
+
+    stop() {
+        let meta
+
+        if (this.startingTimeInfo) {
+            meta = {
+                'starting': this.startingTimeInfo,
+                'current': this.currentTimeInfo,
+                'elapsed': this.elapsedTime
+            }
+            this.pastElapses.push(meta)
+
+            this.startingTimeInfo = undefined
+        }
+
+        return meta
     }
 }
 

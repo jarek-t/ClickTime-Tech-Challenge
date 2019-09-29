@@ -15,9 +15,9 @@
     <div id="main-content-wrap">
       <section id="clock-display">
         <div id="clock-body">
-          <label class="time-display starting" for="starting-time">Starting</label>
+          <label id="starting-label" for="starting-time">Starting</label>
 
-          <h1 id="starting-time">
+          <h1 class="starting" id="starting-time">
               <span id="starting-hours">--</span>:<span 
                   id="starting-minutes">--</span>:<span 
                   id="starting-seconds">--</span>
@@ -29,9 +29,9 @@
                 id="current-seconds">00</span>
           </h1>
           
-          <label class="time-display elapsed" for="elapsed-time">Elapsed</label>
+          <label id="elapsed-label" for="elapsed-time">Elapsed</label>
 
-          <h1 class="elapsed-time-display" id="elapsed-time">
+          <h1 class="elapsed" id="elapsed-time">
               <span id="elapsed-hours">--</span>:<span 
                   id="elapsed-minutes">--</span>:<span 
                   id="elapsed-seconds">--</span>
@@ -42,9 +42,9 @@
 
       <aside id="clock-control">
         <div id="control-wrap">
-          <i class="fas fa-stop"></i>
+          <i id="stop-timer" class="fas fa-stop"></i>
 
-          <i class="fas fa-play"></i>
+          <i id="start-timer" class="fas fa-play"></i>
         </div>
       </aside>
 
