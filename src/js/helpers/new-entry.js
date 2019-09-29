@@ -1,19 +1,25 @@
 let data = (source, destination) => {
     if (!source instanceof Object) return undefined
-    if (!navigator.geolocation) return false
 
-    let success = loc => {
-        source.userLat = loc.coords.latitude
-        source.userLng = loc.coords.longitude
-
-        console.log(source)
-        destination.newEntry(source)
-    }
-
-    let fail = () => 
-        { window.alert("Sorry, we couldn't access your location to complete the entry") }
+    if (navigator.geolocation) {
+        let success = loc => {
+            source.userLat = loc.coords.latitude
+            source.userLng = loc.coords.longitude
     
-    pos = navigator.geolocation.getCurrentPosition(success, fail)
+            console.log(source)
+            destination.newEntry(source)
+        }
+    
+        let fail = () => { 
+            window.alert("Couldn't access your location to complete the entry") 
+            destination.newEntry(source)
+        }
+        
+        pos = navigator.geolocation.getCurrentPosition(success, fail)
+    }
+    else destination.newEntry(source)
+
+    return source
 }
 
 module.exports.data = data
