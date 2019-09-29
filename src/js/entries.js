@@ -1,8 +1,11 @@
+
 const entryVaidator = require('./helpers/entry-validators')
 
 class Entries {
-    constructor() {
+    constructor(coordinator) {
         if (!localStorage.entries) localStorage.entries = {}
+
+        this.coordinator = coordinator
 
         this.fieldValidation = {
             "lat": entryVaidator.lat,

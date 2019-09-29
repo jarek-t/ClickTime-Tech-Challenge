@@ -1,5 +1,7 @@
 class Clock {
-    constructor() {
+    constructor(coordinator) {
+        this.coordinator = coordinator
+
         this.startingTimeInfo
 
         this.currentTimeInfo = this.startingTime
@@ -23,12 +25,6 @@ class Clock {
         }
         
         this.pastElapses = []
-
-        document.getElementById('stop-timer').addEventListener('click',
-            () => this.stop() )
-
-        document.getElementById('start-timer').addEventListener('click',
-            () => this.start() )
 
         this.updateDisplay()
     }
