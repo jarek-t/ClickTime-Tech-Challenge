@@ -1,9 +1,11 @@
-const clock = require('./clock')
-const entries = require('./entries')
+const Clock = require('./clock')
+const Entries = require('./entries')
 
 class Coordinator {
     constructor() {
+        self.clock = new Clock()
 
+        self.entries = new Entries()
     }
 }
 
