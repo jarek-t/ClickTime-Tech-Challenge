@@ -1,12 +1,13 @@
+const entryVaidator = require('./helpers/entry-validators')
+
 class Entries {
     constructor() {
         if (!localStorage.entries) localStorage.entries = {}
 
         self.fieldValidation = {
-            "lat": null,//re expression
-            "lng": null,//re expression
-            "timezone": null,//re expression
-            "timestamp": null//re expression
+            "lat": entryVaidator.lat,
+            "lng": entryVaidator.lng,
+            "dateInfo": entryVaidator.date
         }
     }
 
@@ -40,11 +41,7 @@ class Entries {
         }
 
         return allValid
-    }
-
-    validateField(source) {
-        // Validate with regex
-    }    
+    }  
 }
 
 module.exports = entries
