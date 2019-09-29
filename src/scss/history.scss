@@ -44,7 +44,7 @@
     flex-direction: column;
     justify-content: flex-start;
 
-    #history-header {
+    #history-area-header {
         width: 100%;
         box-sizing: border-box;
         padding: 0 calc(10%+1rem);
@@ -75,18 +75,34 @@
         list-style: none;
         background-color: #FFF;
 
-        li {
-            width: 100%;
+        * {
             display: flex;
             flex-direction: row;
             align-content: center;
-            justify-content: space-around;
 
             * {
+                flex: 1;
+                text-align: center;
+                
+                margin: 0;
                 padding: 0;
-                margin: auto;
-                height: auto;        
+                height: auto;
+
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-content: center;
+
+                border-right: .15rem solid $blue;
+                &:first-child { border-color: $pink; }
+                &:nth-child(2) { border-color: $orange; }
+                &:last-child { border: none; }
             }
+        }
+
+        li {
+            width: 100%;
+            margin: .25rem 0;
         }
     }
 }

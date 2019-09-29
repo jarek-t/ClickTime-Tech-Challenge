@@ -4,27 +4,24 @@ const entryMaker = require('./helpers/new-entry')
 
 class Coordinator {
     constructor() {
+        this.historyTable = document.getElementById('history-table')
+
         this.clock = new Clock(this)
         this.entries = new Entries(this)
 
         document.getElementById('start-timer').addEventListener('click',
             () => this.clock.start() )
 
-        document.getElementById('stop-timer').addEventListener('click', () => {
-            let entrySource = this.clock.stop()
-            entryMaker.data(entrySource, this.entries)
-            
-            let dom = entryMaker.dom(entrySource)
-        })
+        document.getElementById('stop-timer').addEventListener('click', () => this.newEntry())
     }
 
     newEntry() {
-        let entry = {}
-        let elapsed = clock.stop()
+        let entrySource = this.clock.stop()
+        entryMaker.data(entrySource, this.entries)
+        
+        // let dom = 
 
-        if (elapsed) {
-
-        }
+        this.historyTable.appendChild(entryMaker.dom(entrySource))
     }
 
 

@@ -23,3 +23,7 @@ const date = userDate =>
     { return userDate instanceof Date && !isNaN(userDate.valueOf()) }
 
 module.exports.date = date
+
+const time = time => { return (/[\d\d\:]{3}/g.exec(time))[0] == time }
+
+module.exports.time = time

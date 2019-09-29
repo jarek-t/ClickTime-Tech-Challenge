@@ -10,7 +10,9 @@ class Entries {
         this.fieldValidation = {
             "lat": entryVaidator.lat,
             "lng": entryVaidator.lng,
-            "dateInfo": entryVaidator.date
+            "starting": entryVaidator.date,
+            "starting": entryVaidator.date,
+            "elapsed": entryVaidator.time
         }
     }
 

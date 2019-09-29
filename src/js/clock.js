@@ -138,7 +138,7 @@ class Clock {
         if (this.startingTimeInfo) {
             meta = {
                 'starting': this.startingTimeInfo,
-                'current': this.currentTimeInfo,
+                'ending': this.currentTimeInfo,
                 'elapsed': this.elapsedTime
             }
             this.pastElapses.push(meta)
