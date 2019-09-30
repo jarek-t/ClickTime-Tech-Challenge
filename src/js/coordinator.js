@@ -16,14 +16,15 @@ class Coordinator {
             let entrySource = this.clock.stop()
             entryMaker.data(entrySource, this)
         })
+
+        this.entries.all.forEach(
+            e => this.historyTable.appendChild(entryMaker.dom(e)) )
     }
 
     newEntry(source) {
         this.entries.newEntry(source)
         this.historyTable.appendChild(entryMaker.dom(source))
     }
-
-
 }
 
 module.exports = Coordinator

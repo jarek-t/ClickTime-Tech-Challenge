@@ -51,13 +51,13 @@ let coordsToDisplay = source => {
     
     let coords = document.createElement('h1')
     
-    if (Number.isFinite(source.lat) && Number.isFinite(source.lng)) {
+    if (Number.isFinite(source.userLat) && Number.isFinite(source.userLng)) {
         let link = document.createElement('a')
         
-        link.href = 'https://google.com/maps/place/'+source.lat+','+source.lng
+        link.href = 'https://google.com/maps/place/'+source.userLat+','+source.userLng
         link.target = '_blank'
         
-        link.innerHTML = source.lat.toPrecision(3) + ', ' + source.lng.toPrecision(3)
+        link.innerHTML = source.userLat.toPrecision(7) + ', ' + source.userLng.toPrecision(7)
         coords.appendChild(link)
     }
     else {
@@ -70,7 +70,6 @@ let coordsToDisplay = source => {
 let dom = source => {
     if (!source instanceof Object) return undefined
 
-    console.log(source)
     let entry = document.createElement('li')
     entry.class = 'time-entry'
 

@@ -1,10 +1,22 @@
 class Clock {
     constructor(coordinator) {
         this.coordinator = coordinator
-
+        
         this.startingTimeInfo
 
-        this.currentTimeInfo = this.startingTime
+        console.log(localStorage.startingTime)
+
+        if (localStorage.startingTime) {
+            let date = new Date(Number.parseInt(localStorage.startingTime))
+            
+            if (date instanceof Date) 
+                this.startingTimeInfo = date
+            else delete localStorage.startingTime
+        }
+        
+        console.log(this.startingTimeInfo)
+        
+        this.currentTimeInfo = new Date()
 
         this.displaySlots = {
             'starting': {
@@ -26,35 +38,20 @@ class Clock {
         
         this.pastElapses = []
 
+        this.nullTime = {'hours': '--', 'minutes': '--', 'seconds': '--'}
+
         this.updateDisplay()
     }
 
-    get currentTime() {
+    get currentTime() { 
         this.currentTimeInfo = new Date()
-        
-        
-        let timeInfo = {
-            'seconds': this.currentTimeInfo.getSeconds(),
-            'minutes': this.currentTimeInfo.getMinutes(),
-            'hours': this.currentTimeInfo.getHours()
-        }
-
-        Object.keys(timeInfo).forEach(t => {
-            let formatted = timeInfo[t].toString()
-
-            formatted = formatted.length == 2 ? 
-                formatted : ("0" + formatted)
-
-            timeInfo[t] = formatted
-        })
-
-        return timeInfo
+        return this.formattedTime(this.currentTimeInfo) 
     }
 
     get startingTime() {
-        return this.startingTimeInfo ? 
-            this.formattedTime(this.startingTimeInfo) : this.nullTime
-    }
+        // console.log(this.startingTimeInfo)
+        return this.startingTimeInfo ? this.formattedTime(this.startingTimeInfo) : undefined 
+    }   
 
     formattedTime(time) {
         let timeInfo = {
@@ -76,7 +73,8 @@ class Clock {
     }
 
     get elapsedTime() {
-        if (!this.startingTimeInfo) return this.nullTime
+        if (!this.startingTimeInfo || !this.startingTimeInfo.getTime) 
+            return undefined
 
         let elapsed = (this.currentTimeInfo.getTime() - this.startingTimeInfo.getTime())/1000
         
@@ -98,6 +96,8 @@ class Clock {
     }
 
     get timezone() {
+        if (!localStorage.startingTime) return undefined
+
         let offset = this.startingTimeInfo.getTimezoneOffset()
 
         offset = 0 - offset == 0 - -offset ? '+ ' : '- ' + offset  
@@ -105,17 +105,16 @@ class Clock {
         return 'UTC ' + offset
     }
 
-    get nullTime() 
-        { return {'hours': '--', 'minutes': '--', 'seconds': '--'} }
-
     updateDisplay() {
         let times = {
             'starting': this.startingTime,
             'current': this.currentTime,
             'elapsed': this.elapsedTime
         }
-    
+        
         Object.keys(times).forEach(t => {
+            if (!times[t]) times[t] = this.nullTime
+
             let targetTime = this.displaySlots[t]
 
             Object.keys(targetTime).forEach(
@@ -126,8 +125,8 @@ class Clock {
     }
 
     start() {
-        if (!this.startingTimeInfo)
-            this.startingTimeInfo = new Date() 
+        this.startingTimeInfo = new Date()
+        localStorage.setItem("startingTime", this.currentTimeInfo.valueOf())
     }
 
     stop() {
@@ -139,8 +138,10 @@ class Clock {
                 'ending': this.currentTimeInfo,
                 'elapsed': this.elapsedTime
             }
+
             this.pastElapses.push(meta)
-            this.startingTimeInfo = undefined
+            delete localStorage.startingTime
+            delete this.startingTimeInfo
         }
 
         return meta

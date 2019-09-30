@@ -3,7 +3,16 @@ const entryVaidator = require('./helpers/entry-validators')
 
 class Entries {
     constructor(coordinator) {
-        if (!localStorage.entries) localStorage.entries = {}
+        this.all = []
+
+        console.log(localStorage.entries)
+        if (localStorage.entries) {
+            try {
+                let pastEntries = JSON.parse(localStorage.entries)
+                this.all = pastEntries ? pastEntries : this.all
+            }
+            catch (e) { }//delete localStorage.entries }
+        }
 
         this.coordinator = coordinator
 
@@ -15,12 +24,6 @@ class Entries {
             "elapsed": entryVaidator.time
         }
     }
-
-    get entries()
-        { return localStorage.entries }
-
-    set entries(e)
-        { localStorage.entries = {} }
 
     newEntry(source) {
         let allValid = false
@@ -38,13 +41,15 @@ class Entries {
                 
                 { newEntry[field] = source[field] }
     
-                else allValid = false
+                else {allValid = false; console.log(field)}
             })
     
-            if (allValid)
+            if (allValid) {
+                console.log('cool')
                 this.all.push(newEntry)
+                localStorage.setItem('entries', JSON.stringify(this.all))
+            }
         }
-
         return allValid
     }  
 }
