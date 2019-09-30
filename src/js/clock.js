@@ -1,19 +1,21 @@
 class Clock {
-    constructor(coordinator) {
-        this.coordinator = coordinator
-        
+    constructor() {
+        // both used to calculate elapsed time & record entries
+        this.currentTimeInfo
         this.startingTimeInfo
 
+        // check localStorage for pre-existing timer
         if (localStorage.startingTime) {
+            // try to parse existing starting time
             let date = new Date(Number.parseInt(localStorage.startingTime))
             
+            // either set the time or delete the erroneous time
             if (date instanceof Date) 
                 this.startingTimeInfo = date
             else delete localStorage.startingTime
         }
         
-        this.currentTimeInfo = new Date()
-
+        // used to control the time on each of the three clock displays
         this.displaySlots = {
             'starting': {
                 'hours': document.getElementById('starting-hours'),
@@ -32,22 +34,25 @@ class Clock {
             },
         }
         
-        this.pastElapses = []
-
+        // establish null time template
         this.nullTime = {'hours': '--', 'minutes': '--', 'seconds': '--'}
-
+        // recursively start the clocks
         this.updateDisplay()
     }
 
+    // updates the current time objects, return pre-formatted data
     get currentTime() { 
         this.currentTimeInfo = new Date()
         return this.formattedTime(this.currentTimeInfo) 
     }
 
+    // returns pre-formatted starting time info or undefined
     get startingTime() 
         { return this.startingTimeInfo ? this.formattedTime(this.startingTimeInfo) : undefined }   
 
+    // formats time info
     formattedTime(time) {
+        console.log(time)
         let timeInfo = {
             'seconds': time.getSeconds(),
             'minutes': time.getMinutes(),
@@ -66,29 +71,31 @@ class Clock {
         return timeInfo
     }
 
+    // returns undefined or calculates elapsed time
     get elapsedTime() {
         if (!this.startingTimeInfo || !this.startingTimeInfo.getTime) 
             return undefined
 
+        // elapsed time in seconds
         let elapsed = (this.currentTimeInfo.getTime() - this.startingTimeInfo.getTime())/1000
         
+        // hours with parseInt for rounding
         let hours = Number.parseInt(elapsed/3600)
-        let et = {
-            'hours': hours,
-            'minutes': Number.parseInt(Number.parseInt(
-                (elapsed - (hours * 3600)) / 60 )),
-            'seconds': Number.parseInt(elapsed % 60)
-        }
-        
-        Object.keys(et).forEach(t => {
-            elapsed = et[t].toString()
 
-            et[t] = elapsed.length >= 2 ? elapsed : "0" + elapsed
-        })
-        
-        return et
+        // et populated by functions for compatibility with time objects
+        let et = {
+            getHours: () => hours,
+            // minutes via calculation with hours
+            getMinutes: () => Number.parseInt(Number.parseInt(
+                (elapsed - (hours * 3600)) / 60 )),
+            // seconds via a remainder from elapsed
+            getSeconds: () => Number.parseInt(elapsed % 60)
+        }
+
+        return this.formattedTime(et)
     }
 
+    // return the timezone as "UTC (-||+) $T"
     get timezone() {
         if (!localStorage.startingTime) return undefined
 
@@ -99,6 +106,8 @@ class Clock {
         return 'UTC ' + offset
     }
 
+
+    // update all three DOM clocks (recursive)
     updateDisplay() {
         let times = {
             'starting': this.startingTime,
@@ -106,34 +115,42 @@ class Clock {
             'elapsed': this.elapsedTime
         }
         
+        // update clocks' headings' spans with the null time or the relevant time
         Object.keys(times).forEach(t => {
-            if (!times[t]) times[t] = this.nullTime
+            if (times[t] === undefined) times[t] = this.nullTime
 
             let targetTime = this.displaySlots[t]
 
             Object.keys(targetTime).forEach(
                 ts => targetTime[ts].innerHTML = times[t][ts] )
-        })        
+        }) 
 
         setTimeout(() => this.updateDisplay(), 1000)
     }
 
+    // start timer by if one isn't runninng
     start() {
-        this.startingTimeInfo = new Date()
-        localStorage.setItem("startingTime", this.currentTimeInfo.valueOf())
+        if (!this.startingTimeInfo) {
+            // Clocks will update on next second
+            this.startingTimeInfo = new Date()
+
+            localStorage.setItem("startingTime", this.currentTimeInfo.valueOf())
+        }
     }
 
+    // stops timer if one is running
     stop() {
         let meta
 
         if (this.startingTimeInfo) {
+            //compose record (starting & ending times are Date prototypes)
             meta = {
                 'starting': this.startingTimeInfo,
                 'ending': this.currentTimeInfo,
                 'elapsed': this.elapsedTime
             }
 
-            this.pastElapses.push(meta)
+            // reset timer values
             delete localStorage.startingTime
             delete this.startingTimeInfo
         }
