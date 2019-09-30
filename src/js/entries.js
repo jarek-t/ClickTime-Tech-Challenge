@@ -2,20 +2,23 @@
 const entryValidator = require('./helpers/entry-validators')
 
 class Entries {
-    constructor(coordinator) {
+    constructor() {
+        // mutable storage of all entries
         this.all = []
 
+        // read entries or delete unparsable data
         if (localStorage.entries) {
             try { this.all = JSON.parse(localStorage.entries) }
             catch (e) { delete localStorage.entries }
         }
+
+        // restore dates to their Date prototype
         this.all.forEach(e => {
             e.starting = new Date(e.starting)
             e.ending = new Date(e.ending)
         })
 
-        this.coordinator = coordinator
-
+        // index of entry component validators
         this.fieldValidation = {
             "userLat": entryValidator.lat,
             "userLng": entryValidator.lng,
@@ -25,27 +28,27 @@ class Entries {
         }
     }
 
+    // validate all fields for a potential new entry or ignore it
     newEntry(source) {
         let allValid = false
 
         if (source instanceof Object) {
             let newEntry = {}
             let allValid = true
-    
-            let allFields = Object.keys(this.fieldValidation)
-    
-            allFields.forEach(field => {
+            
+            // check field validity with our member function index
+            Object.keys(this.fieldValidation).forEach(field => {
                 if ( source[field]
                      && 
                     this.fieldValidation[field](source[field]) ) 
                 
-                { newEntry[field] = source[field] }
+                newEntry[field] = source[field]
     
-                else {allValid = false; console.log(field, source[field])}
+                else allValid = false
             })
-    
+            
+            // update mutable & persistent storage with any valid entry
             if (allValid) {
-                console.log('cool')
                 this.all.push(newEntry)
                 localStorage.setItem('entries', JSON.stringify(this.all))
             }
@@ -53,6 +56,7 @@ class Entries {
         return allValid
     }
 
+    // reset entry history
     reset() {
         this.all = []
         delete localStorage.entries

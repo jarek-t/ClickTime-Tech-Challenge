@@ -1,23 +1,26 @@
-const coord = userCoords => {return !Number.isNaN(userCoords) || userCoords === true}
+// Confirms a coordinate is potentially valid or unavailable
+const coord = userCoords => 
+    !Number.isNaN(userCoords) || userCoords === false
 
+// Confirms a latitude is unavailable or valid
 const lat = userLat =>
-    { return coord(userLat) || (userLat <= 90 && userLat >= -90) }
+    coord(userLat) || (userLat <= 90 && userLat >= -90)
 
 module.exports.lat = lat
 
+// Confirms a longitude is unavailable or valid
 const lng = userLng =>
-    { return coord(userLng) || (userLng <= 180 && userLng >= -180) }
+    coord(userLng) || (userLng <= 180 && userLng >= -180)
 
 module.exports.lng = lng
 
+// Confirms a valid date
 const date = userDate =>
-    { return userDate instanceof Date && !isNaN(userDate.valueOf()) }
+    userDate instanceof Date && !isNaN(userDate.valueOf())
 
 module.exports.date = date
 
-const time = time => { 
-    return time instanceof Object && 
-        time.hours && time.minutes && time.seconds
-}
+// Confirms a valid time
+const time = time => time instanceof Object
 
 module.exports.time = time
