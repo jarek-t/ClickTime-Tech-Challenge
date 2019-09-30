@@ -17,13 +17,26 @@ class Coordinator {
             entryMaker.data(entrySource, this)
         })
 
+        document.getElementById('history-reset-button')
+            .addEventListener('click', () => this.reset())
+
         this.entries.all.forEach(
-            e => this.historyTable.appendChild(entryMaker.dom(e)) )
+            e => {this.historyTable.appendChild(entryMaker.dom(e)); console.log(e)} )
     }
 
     newEntry(source) {
         this.entries.newEntry(source)
         this.historyTable.appendChild(entryMaker.dom(source))
+    }
+
+    reset() {
+        this.entries.reset()
+
+        let historyHeader = document.getElementById('history-headers')
+        this.historyTable.removeChild(historyHeader)
+
+        this.historyTable.innerHTML = ''
+        this.historyTable.appendChild(historyHeader)
     }
 }
 

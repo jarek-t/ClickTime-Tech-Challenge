@@ -1,27 +1,27 @@
 
-const entryVaidator = require('./helpers/entry-validators')
+const entryValidator = require('./helpers/entry-validators')
 
 class Entries {
     constructor(coordinator) {
         this.all = []
 
-        console.log(localStorage.entries)
         if (localStorage.entries) {
-            try {
-                let pastEntries = JSON.parse(localStorage.entries)
-                this.all = pastEntries ? pastEntries : this.all
-            }
-            catch (e) { }//delete localStorage.entries }
+            try { this.all = JSON.parse(localStorage.entries) }
+            catch (e) { delete localStorage.entries }
         }
+        this.all.forEach(e => {
+            e.starting = new Date(e.starting)
+            e.ending = new Date(e.ending)
+        })
 
         this.coordinator = coordinator
 
         this.fieldValidation = {
-            "lat": entryVaidator.lat,
-            "lng": entryVaidator.lng,
-            "starting": entryVaidator.date,
-            "starting": entryVaidator.date,
-            "elapsed": entryVaidator.time
+            "userLat": entryValidator.lat,
+            "userLng": entryValidator.lng,
+            "starting": entryValidator.date,
+            "ending": entryValidator.date,
+            "elapsed": entryValidator.time
         }
     }
 
@@ -41,7 +41,7 @@ class Entries {
                 
                 { newEntry[field] = source[field] }
     
-                else {allValid = false; console.log(field)}
+                else {allValid = false; console.log(field, source[field])}
             })
     
             if (allValid) {
@@ -51,7 +51,12 @@ class Entries {
             }
         }
         return allValid
-    }  
+    }
+
+    reset() {
+        this.all = []
+        delete localStorage.entries
+    }
 }
 
 module.exports = Entries

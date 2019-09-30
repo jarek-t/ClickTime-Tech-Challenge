@@ -4,8 +4,6 @@ class Clock {
         
         this.startingTimeInfo
 
-        console.log(localStorage.startingTime)
-
         if (localStorage.startingTime) {
             let date = new Date(Number.parseInt(localStorage.startingTime))
             
@@ -13,8 +11,6 @@ class Clock {
                 this.startingTimeInfo = date
             else delete localStorage.startingTime
         }
-        
-        console.log(this.startingTimeInfo)
         
         this.currentTimeInfo = new Date()
 
@@ -48,10 +44,8 @@ class Clock {
         return this.formattedTime(this.currentTimeInfo) 
     }
 
-    get startingTime() {
-        // console.log(this.startingTimeInfo)
-        return this.startingTimeInfo ? this.formattedTime(this.startingTimeInfo) : undefined 
-    }   
+    get startingTime() 
+        { return this.startingTimeInfo ? this.formattedTime(this.startingTimeInfo) : undefined }   
 
     formattedTime(time) {
         let timeInfo = {

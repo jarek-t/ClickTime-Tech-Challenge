@@ -2,8 +2,11 @@ let data = (source, coordinator) => {
     if (!source instanceof Object) return undefined
 
     // let destination = coordinator.entries
-
+    source.userLat = true
+    source.userLng = true
+    
     if (navigator.geolocation) {
+        
         let success = loc => {
             source.userLat = loc.coords.latitude
             source.userLng = loc.coords.longitude
@@ -26,24 +29,31 @@ let data = (source, coordinator) => {
 
 module.exports.data = data
 
+let toText = (source, joinWith) => {
+    source.forEach(s => {
+        s = s.toString()
+        s = s.length > 1 ? s : "0" + s
+    })
+
+    return source.join(joinWith)
+}
+
 let dateToText = date => {
     if (!date || !date instanceof Date) return undefined
 
-    dateStr = [
+    dateMembers = [
         date.getMonth(),
         date.getDate(),
         date.getFullYear().toString().substr(-2)
-    ].join('/')
-    
-    dateStr += ' - '
+    ]
 
-    dateStr += [
+    timeMembers = [
         date.getHours(),
         date.getMinutes(),
         date.getSeconds()
-    ].join(':')
+    ]
 
-    return dateStr
+    return toText(dateMembers,"/") + " - " + toText(timeMembers,":")
 }
 
 let coordsToDisplay = source => {
@@ -60,9 +70,7 @@ let coordsToDisplay = source => {
         link.innerHTML = source.userLat.toPrecision(7) + ', ' + source.userLng.toPrecision(7)
         coords.appendChild(link)
     }
-    else {
-        coords.innerHTML = 'No Data'
-    }
+    else coords.innerHTML = 'No Data'
 
     return coords.innerHTML
 }
@@ -74,9 +82,7 @@ let dom = source => {
     entry.class = 'time-entry'
 
     let temp = document.createElement('h5')
-    temp.innerHTML += source.elapsed.hours + ":" + 
-        source.elapsed.minutes + ":" + 
-        source.elapsed.seconds
+    temp.innerHTML = toText(Object.values(source.elapsed), ":")
     entry.appendChild(temp)
 
     temp = document.createElement('h5')

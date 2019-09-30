@@ -1,10 +1,12 @@
+const coord = userCoords => {return !Number.isNaN(userCoords) || userCoords === true}
+
 const lat = userLat =>
-    { return !Number.isNaN(userLat) && (userLat <= 90 && userLat >= -90) }
+    { return coord(userLat) || (userLat <= 90 && userLat >= -90) }
 
 module.exports.lat = lat
 
 const lng = userLng =>
-    { return !Number.isNaN(userLng) && (userLng <= 180 && userLng >= -180) }
+    { return coord(userLng) || (userLng <= 180 && userLng >= -180) }
 
 module.exports.lng = lng
 
