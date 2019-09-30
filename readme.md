@@ -27,6 +27,7 @@ and coordinates for Professor Higginbotham's "Race Around the World".
 #### To-Do (hypothetical)
  - Better staggered SCSS loading
  - Re-arrange timer area for correct cursor transitions
+ - Expand responsive styles
  - Time Zones/Location
  - - Record start & stop locations
  - - Display time zone differences
