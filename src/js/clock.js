@@ -1,10 +1,18 @@
 class Clock {
     constructor(coordinator) {
         this.coordinator = coordinator
-
+        
         this.startingTimeInfo
 
-        this.currentTimeInfo = this.startingTime
+        if (localStorage.startingTime) {
+            let date = new Date(Number.parseInt(localStorage.startingTime))
+            
+            if (date instanceof Date) 
+                this.startingTimeInfo = date
+            else delete localStorage.startingTime
+        }
+        
+        this.currentTimeInfo = new Date()
 
         this.displaySlots = {
             'starting': {
@@ -26,35 +34,18 @@ class Clock {
         
         this.pastElapses = []
 
+        this.nullTime = {'hours': '--', 'minutes': '--', 'seconds': '--'}
+
         this.updateDisplay()
     }
 
-    get currentTime() {
+    get currentTime() { 
         this.currentTimeInfo = new Date()
-        
-        
-        let timeInfo = {
-            'seconds': this.currentTimeInfo.getSeconds(),
-            'minutes': this.currentTimeInfo.getMinutes(),
-            'hours': this.currentTimeInfo.getHours()
-        }
-
-        Object.keys(timeInfo).forEach(t => {
-            let formatted = timeInfo[t].toString()
-
-            formatted = formatted.length == 2 ? 
-                formatted : ("0" + formatted)
-
-            timeInfo[t] = formatted
-        })
-
-        return timeInfo
+        return this.formattedTime(this.currentTimeInfo) 
     }
 
-    get startingTime() {
-        return this.startingTimeInfo ? 
-            this.formattedTime(this.startingTimeInfo) : this.nullTime
-    }
+    get startingTime() 
+        { return this.startingTimeInfo ? this.formattedTime(this.startingTimeInfo) : undefined }   
 
     formattedTime(time) {
         let timeInfo = {
@@ -75,8 +66,9 @@ class Clock {
         return timeInfo
     }
 
-    get elaspedTime() {
-        if (!this.startingTimeInfo) return this.nullTime
+    get elapsedTime() {
+        if (!this.startingTimeInfo || !this.startingTimeInfo.getTime) 
+            return undefined
 
         let elapsed = (this.currentTimeInfo.getTime() - this.startingTimeInfo.getTime())/1000
         
@@ -91,14 +83,15 @@ class Clock {
         Object.keys(et).forEach(t => {
             elapsed = et[t].toString()
 
-            console.log(elapsed.length)
             et[t] = elapsed.length >= 2 ? elapsed : "0" + elapsed
         })
-
+        
         return et
     }
 
     get timezone() {
+        if (!localStorage.startingTime) return undefined
+
         let offset = this.startingTimeInfo.getTimezoneOffset()
 
         offset = 0 - offset == 0 - -offset ? '+ ' : '- ' + offset  
@@ -106,18 +99,16 @@ class Clock {
         return 'UTC ' + offset
     }
 
-    get nullTime() 
-        { return {'hours': '--', 'minutes': '--', 'seconds': '--'} }
-
     updateDisplay() {
         let times = {
             'starting': this.startingTime,
             'current': this.currentTime,
-            'elapsed': this.elaspedTime
+            'elapsed': this.elapsedTime
         }
         
-
         Object.keys(times).forEach(t => {
+            if (!times[t]) times[t] = this.nullTime
+
             let targetTime = this.displaySlots[t]
 
             Object.keys(targetTime).forEach(
@@ -128,8 +119,8 @@ class Clock {
     }
 
     start() {
-        if (!this.startingTimeInfo)
-            this.startingTimeInfo = new Date() 
+        this.startingTimeInfo = new Date()
+        localStorage.setItem("startingTime", this.currentTimeInfo.valueOf())
     }
 
     stop() {
@@ -138,12 +129,13 @@ class Clock {
         if (this.startingTimeInfo) {
             meta = {
                 'starting': this.startingTimeInfo,
-                'current': this.currentTimeInfo,
+                'ending': this.currentTimeInfo,
                 'elapsed': this.elapsedTime
             }
-            this.pastElapses.push(meta)
 
-            this.startingTimeInfo = undefined
+            this.pastElapses.push(meta)
+            delete localStorage.startingTime
+            delete this.startingTimeInfo
         }
 
         return meta
